@@ -22,7 +22,14 @@ namespace forth_point {
 using namespace std;
 
 vector<forth_point::point> read_parallelogram(std::istream& is) {
+	forth_point::point start, end;
 	vector<forth_point::point> parallelogram;
+	for (size_t i = 0; i < 2; ++i) {
+		is >> start >> end;
+		parallelogram.push_back(start);
+	}
+	parallelogram.push_back(end);
+	is.ignore(1, '\n');
 	return parallelogram;
 }
 
