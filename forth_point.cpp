@@ -84,11 +84,14 @@ forth_point::point calculate_forth_point(vector<forth_point::point>& points) {
 }
 
 int main(int argc, char **argv) {
-	while (!cin.eof()) {
+	for (unsigned int i = 0; !cin.eof(); ++i) {
 		vector<forth_point::point> parallelogram = read_parallelogram(cin);
 		forth_point::point forth = calculate_forth_point(parallelogram);
-		cout << fixed << setprecision(3) << forth.getx() << " " << fixed << setprecision(3) << forth.gety() << endl;
+        if (i != 0) {
+            cout << endl;
         }
+		cout << fixed << setprecision(3) << forth.getx() << " " << fixed << setprecision(3) << forth.gety();
+	}
 
 	return 0;
 }
