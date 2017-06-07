@@ -13,6 +13,7 @@ namespace forth_point {
 		~point() {}
 
 		point& operator=(const point& rhs) { x = rhs.x; y = rhs.y; return *this; }
+        bool operator==(const point& rhs) { return (x == rhs.x && y == rhs.y); }
 		inline point operator+(const vector& vec);
 		inline point operator-(const vector& vec);
 		const double getx() const { return x; }
@@ -52,11 +53,22 @@ using namespace std;
 vector<forth_point::point> read_parallelogram(std::istream& is) {
 	forth_point::point start, end;
 	vector<forth_point::point> parallelogram;
-	for (size_t i = 0; i < 2; ++i) {
-		is >> start >> end;
-		parallelogram.push_back(start);
-	}
+	is >> start >> end;
+	parallelogram.push_back(start);
 	parallelogram.push_back(end);
+    is >> start >> end;
+    if (start == parallelogram[0]) {
+        parallelogram.insert(parallelogram.begin(), end);
+    }
+    else if (start == parallelogram[1]) {
+        parallelogram.push_back(end);
+    }
+    else if (end == parallelogram[0]){
+        parallelogram.insert(parallelogram.begin(), start);
+    }
+    else {
+        parallelogram.push_back(start);
+    }
 	is.ignore(1, '\n');
 	return parallelogram;
 }
@@ -76,7 +88,7 @@ int main(int argc, char **argv) {
 		vector<forth_point::point> parallelogram = read_parallelogram(cin);
 		forth_point::point forth = calculate_forth_point(parallelogram);
 		cout << fixed << setprecision(3) << forth.getx() << " " << fixed << setprecision(3) << forth.gety() << endl;
-	}
+        }
 
 	return 0;
 }
